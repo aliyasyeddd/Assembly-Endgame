@@ -1,12 +1,11 @@
 import { languages } from "./languages";
 import { useState } from "react";
+import clsx from "clsx";
 
 function AssemblyEndgame() {
- const [currentWord, setCurrentWord] = useState("REACT")
- const [guessedLetters, setGuessedLetters] = useState([])
- const alphabet = "abcdefghijklmnopqrstuvwxyz"
- console.log(guessedLetters)
-
+  const [currentWord, setCurrentWord] = useState("react");
+  const [guessedLetters, setGuessedLetters] = useState([]);
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   const languageElements = languages.map((lang) => {
     const styles = {
@@ -20,21 +19,37 @@ function AssemblyEndgame() {
     );
   });
 
-   const letterElements = currentWord.split("").map((letter, index) => (
-        <span key={index}>{letter.toUpperCase()}</span>
-    ))
+  const letterElements = currentWord.split("").map((letter, index) => {
+    const guessedWord = guessedLetters.includes(letter) ? letter.toUpperCase() : " "
+    //console.log(guessedWord)
+    return (
+      <span key={index}>{guessedWord}</span>
+    )});
 
-      const keyboardElements = alphabet.split("").map(letter => (
-        <button key={letter} onClick={() => addGuessedLetter(letter)}>{letter.toUpperCase()}</button>
-    ))
+  const keyboardElements = alphabet.split("").map((letter) => {
+    const isGuessed = guessedLetters.includes(letter)
+    const isCorrect = isGuessed && currentWord.includes(letter)
+    const isWrong  = isGuessed && !currentWord.includes(letter)
+    const buttonClass = clsx({
+       correct: isCorrect,
+       wrong: isWrong
+    });
+    return (
+      <button
+        className={buttonClass}
+        key={letter}
+        onClick={() => addGuessedLetter(letter)}
+      >
+        {letter.toUpperCase()}
+      </button>
+    );
+  });
 
-    function addGuessedLetter(letter) {
-       setGuessedLetters(prevLetters => 
-            prevLetters.includes(letter) ? 
-                prevLetters : 
-                [...prevLetters, letter]
-        )
-    }
+  function addGuessedLetter(letter) {
+    setGuessedLetters((prevLetters) =>
+      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    );
+  }
 
   return (
     <main>
@@ -50,13 +65,9 @@ function AssemblyEndgame() {
         <p>Well done! 🎉</p>
       </section>
       <section className="language-chips">{languageElements}</section>
-       <section className="word">
-          {letterElements}      
-        </section>
-        <section className="keyboard">
-             {keyboardElements}
-        </section>
-        <button className="new-game">New Game</button>
+      <section className="word">{letterElements}</section>
+      <section className="keyboard">{keyboardElements}</section>
+      <button className="new-game">New Game</button>
     </main>
   );
 }

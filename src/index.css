@@ -27,7 +27,7 @@ header > h1 {
 header > p {
     font-size: 0.875rem;
     max-width: 350px;
-    color: #8E8E8E
+    color: #8E8E8E;
 }
 
 section.game-status {
@@ -55,6 +55,7 @@ section.language-chips {
     justify-content: center;
     max-width: 350px;
     margin-bottom: 36px;
+    margin: 20px auto;
 }
 
 span.chip {
@@ -96,6 +97,14 @@ section.keyboard > button {
     border: 1px solid #D7D7D7;
     border-radius: 3px;
     cursor: pointer;
+}
+
+section.keyboard > button.correct {
+    background-color: #10A95B;
+}
+
+section.keyboard > button.wrong {
+    background-color: #EC5D49;
 }
 
 button.new-game {
