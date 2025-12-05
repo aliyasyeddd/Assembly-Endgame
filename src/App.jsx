@@ -3,7 +3,9 @@ import { useState } from "react";
 
 function AssemblyEndgame() {
  const [currentWord, setCurrentWord] = useState("REACT")
+ const [guessedLetters, setGuessedLetters] = useState([])
  const alphabet = "abcdefghijklmnopqrstuvwxyz"
+ console.log(guessedLetters)
 
 
   const languageElements = languages.map((lang) => {
@@ -23,8 +25,16 @@ function AssemblyEndgame() {
     ))
 
       const keyboardElements = alphabet.split("").map(letter => (
-        <button key={letter}>{letter.toUpperCase()}</button>
+        <button key={letter} onClick={() => addGuessedLetter(letter)}>{letter.toUpperCase()}</button>
     ))
+
+    function addGuessedLetter(letter) {
+       setGuessedLetters(prevLetters => 
+            prevLetters.includes(letter) ? 
+                prevLetters : 
+                [...prevLetters, letter]
+        )
+    }
 
   return (
     <main>
