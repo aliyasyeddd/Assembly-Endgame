@@ -1,6 +1,8 @@
 import { languages } from "./languages";
 import { useState } from "react";
 import clsx from "clsx";
+import {getFarewellText} from "./utils" 
+
 
 function AssemblyEndgame() {
   //state values
@@ -22,7 +24,8 @@ function AssemblyEndgame() {
     gameStatus === "won" && "game-won",
     gameStatus === "lost" && "game-lost"
   );
-
+ 
+  
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -33,7 +36,6 @@ function AssemblyEndgame() {
       color: lang.color,
     };
     const className = clsx("chip", isLanguageLost && "lost");
-
     return (
       <span className={className} style={styles} key={lang.name}>
         {lang.name}
