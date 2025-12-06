@@ -18,16 +18,34 @@ function AssemblyEndgame() {
     .split("")
     .every((letter) => guessedLetters.includes(letter));
   const isGameOver = isGameLost || isGameWon;
-  const gameStatus = isGameWon ? "won" : isGameLost ? "lost" : "idle";
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+  const farewellLanguage = (!isGameOver && isLastGuessIncorrect)
+
+
+  const gameStatus =
+  isGameWon
+    ? "won"
+    : isGameLost
+    ? "lost"
+    : farewellLanguage
+    ? "farewell"
+    : "idle";
+
   const statusStyles = clsx(
     "game-status",
     gameStatus === "won" && "game-won",
-    gameStatus === "lost" && "game-lost"
+    gameStatus === "lost" && "game-lost",
+    gameStatus === "farewell" && "farewell-message"
   );
  
+
   
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+
+
 
   const languageElements = languages.map((lang, index) => {
     const isLanguageLost = index < wrongGuessCount;
@@ -75,6 +93,8 @@ function AssemblyEndgame() {
     );
   }
 
+
+
   return (
     <main>
       <header>
@@ -97,6 +117,9 @@ function AssemblyEndgame() {
             <p>You lose! Better start learning Assembly 😭</p>
           </>
         )}
+        {gameStatus === "farewell" && (
+                <p className="farewell-message">{getFarewellText(languages[wrongGuessCount - 1].name)}</p>
+            )}
       </section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
