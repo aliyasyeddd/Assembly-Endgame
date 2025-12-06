@@ -1,8 +1,7 @@
 import { languages } from "./languages";
 import { useState } from "react";
 import clsx from "clsx";
-import {getFarewellText} from "./utils" 
-
+import { getFarewellText } from "./utils";
 
 function AssemblyEndgame() {
   //state values
@@ -18,13 +17,12 @@ function AssemblyEndgame() {
     .split("")
     .every((letter) => guessedLetters.includes(letter));
   const isGameOver = isGameLost || isGameWon;
-  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
-  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
-  const farewellLanguage = (!isGameOver && isLastGuessIncorrect)
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGuessIncorrect =
+    lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
+  const farewellLanguage = !isGameOver && isLastGuessIncorrect;
 
-
-  const gameStatus =
-  isGameWon
+  const gameStatus = isGameWon
     ? "won"
     : isGameLost
     ? "lost"
@@ -38,14 +36,9 @@ function AssemblyEndgame() {
     gameStatus === "lost" && "game-lost",
     gameStatus === "farewell" && "farewell-message"
   );
- 
 
-  
   //static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-
-
 
   const languageElements = languages.map((lang, index) => {
     const isLanguageLost = index < wrongGuessCount;
@@ -81,6 +74,7 @@ function AssemblyEndgame() {
         className={buttonClass}
         key={letter}
         onClick={() => addGuessedLetter(letter)}
+        disabled={isGameOver}
       >
         {letter.toUpperCase()}
       </button>
@@ -92,8 +86,6 @@ function AssemblyEndgame() {
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
     );
   }
-
-
 
   return (
     <main>
@@ -118,8 +110,10 @@ function AssemblyEndgame() {
           </>
         )}
         {gameStatus === "farewell" && (
-                <p className="farewell-message">{getFarewellText(languages[wrongGuessCount - 1].name)}</p>
-            )}
+          <p className="farewell-message">
+            {getFarewellText(languages[wrongGuessCount - 1].name)}
+          </p>
+        )}
       </section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{letterElements}</section>
