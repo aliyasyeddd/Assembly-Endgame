@@ -1,67 +1,115 @@
-#  Project Title  
+# 🕹️ Assembly: Endgame
 
-> A brief one-liner about your project — what it does and why it’s useful.  
-> _Example: A simple, responsive web app that helps users find the perfect meme based on their mood._  
-
----
-
-## 🪞 Overview  
-Write a short paragraph describing your project:  
-- What problem it solves  
-- Who it’s for  
-- What makes it unique or fun  
-
-_Example:_  
-This web app allows users to interact with dynamic content using JavaScript. It focuses on simplicity, responsiveness, and clean UI design principles.  
+> A Hangman-style word-guessing game with a programming twist — guess the secret word before Assembly takes over the programming world.
 
 ---
 
-## 🚀 Features  
-✨ Key things your app can do:  
+## 📝 Overview
 
-- 🎯 Feature 1  
-- 🧠 Feature 2  
-- 📱 Feature 3  
-- 🌙 Feature 4  
+Assembly: Endgame is a lightweight React game where the player guesses a hidden word, letter by letter. Each incorrect guess advances the spread of Assembly languages (visualized as colored chips). Guess the word within the allowed attempts to win — or face a farewell message using a (funny) programming-language-themed send-off.
+
+This project is great for frontend learners who want to practice React state management, accessibility (aria-live regions), component composition, and simple UI/UX design.
 
 ---
 
-## 🧱 Tech Stack  
-| Technology | Purpose |
-|-------------|----------|
-| **HTML5** | Structure of the app |
-| **CSS3** | Styling and responsiveness |
-| **JavaScript (ES6)** | Logic and interactivity |
-| *(Optional)* **API / Library** | If any external tools were used |
+## 🚀 Features
+
+✨ **Key features include:**
+
+* 🔤 Letter-by-letter word guessing (Hangman-style)
+* 🧩 Visual language chips that indicate remaining attempts
+* 🎉 Confetti celebration on win (react-confetti)
+* ♿ Accessible status updates via `aria-live` regions and visually-hidden copy for screen readers
+* 🔁 Easy reset/new game flow
+* ♻️ Clean state management using React hooks
 
 ---
 
-## 📚 What We Have Studied  
+## 🧱 Tech Stack 🧩
 
-Here are the key JavaScript concepts or tools covered while building this project 🧩   
+| Technology                            | Purpose                                        |
+| ------------------------------------- | ---------------------------------------------- |
+| React (functional components + hooks) | App structure and UI                           |
+| react-confetti                        | Win celebration                                |
+| clsx                                  | Conditional classNames                         |
+| nanoid (optional)                     | Unique keys for dynamic lists                  |
+| CSS / custom styles                   | Visual styling for chips, keyboard, and status |
 
-> Concepts practiced include:  
-> 
-
----
-
-## 🌿 Lessons Learned  
-Reflect briefly on your takeaways:  
-
-> - 
 
 ---
 
-## 🖼️ Screenshots / Demo  
+## ⚙️ Installation
 
-![App Screenshot](/src/assets/demo.png)  
+1. Clone the repo:
 
-🔗 **Live Demo:** [https://your-demo-link.vercel.app](https://your-demo-link.vercel.app)  
+```bash
+git clone <your-repo-url>
+cd your-repo
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn
+```
+
+3. Run the app:
+
+```bash
+npm start
+# or
+yarn start
+```
+
+Open [http://localhost:3000](http://localhost:3000) to play.
 
 ---
 
-## 💫 Author  
-👩‍💻 **Created by [Aliya](https://github.com/aliyasyeddd)**  
-> _“Build. Break. Learn. Repeat.”_ 🌸  
+## 🧩 How it works (implementation notes)
+
+* The main component (`AssemblyEndgame`) uses `useState` to track the current word and guessed letters.
+* Derived values calculate `wrongGuessCount`, `isGameWon`, and `isGameLost`.
+* Language chips are rendered from a `languages` array (each language should include `name`, `backgroundColor`, and `color`).
+* The on-screen keyboard disables buttons after they are guessed and prevents additional input when the game is over.
+* Accessibility: status updates are provided via `aria-live` polite regions and a visually-hidden (`sr-only`) summary for screen reader users.
+
+---
+
+## ✅ Accessibility considerations
+
+* Uses `aria-live="polite"` for dynamic status messages.
+* Buttons include `aria-label` describing the letter.
+* A visually-hidden region provides a combined summary of the last guess and the partially revealed word.
+
+---
+
+## 🖼️ Screenshots / Demo
+
+![App Screenshot](/src/assets/demo.png)
+
+---
+
+## 🛠️ Customization tips
+
+* Change the word list or `getRandomWord` logic to adjust difficulty.
+* Replace `languages` with any themed list (e.g., animals, planets) to alter the visual chips and farewell messages.
+* Tweak the number of attempts by adjusting `numGuessesLeft` calculation.
+
+---
+
+## 🚩 Troubleshooting
+
+* If keyboard letters show incorrect colors, ensure the `clsx` mapping matches the intended boolean flags (`isCorrect` / `isWrong`) and that CSS class names match your stylesheet.
+* If `Confetti` doesn’t appear, verify `react-confetti` is installed and `numberOfPieces` is set when `isGameWon` is `true`.
+
+---
+
+## 💫 Author
+
+**Aliya** — [github.com/aliyasyeddd](https://github.com/aliyasyeddd)
+
+> *“Build. Break. Learn. Repeat.”*
 
 ---
